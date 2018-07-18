@@ -116,7 +116,7 @@
             // btnEdit
             // 
             this.btnEdit.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnEdit.Location = new System.Drawing.Point(632, 160);
+            this.btnEdit.Location = new System.Drawing.Point(598, 162);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(181, 50);
             this.btnEdit.TabIndex = 2;
@@ -127,7 +127,7 @@
             // btnAdd
             // 
             this.btnAdd.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnAdd.Location = new System.Drawing.Point(632, 89);
+            this.btnAdd.Location = new System.Drawing.Point(598, 91);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(181, 48);
             this.btnAdd.TabIndex = 3;
@@ -138,7 +138,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnDelete.Location = new System.Drawing.Point(632, 234);
+            this.btnDelete.Location = new System.Drawing.Point(598, 236);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(181, 45);
             this.btnDelete.TabIndex = 4;
@@ -153,17 +153,17 @@
             ".csv",
             ".xml",
             ".json"});
-            this.cmbBoxType.Location = new System.Drawing.Point(314, 311);
+            this.cmbBoxType.Location = new System.Drawing.Point(153, 310);
             this.cmbBoxType.Name = "cmbBoxType";
-            this.cmbBoxType.Size = new System.Drawing.Size(101, 21);
+            this.cmbBoxType.Size = new System.Drawing.Size(116, 21);
             this.cmbBoxType.TabIndex = 6;
             this.cmbBoxType.SelectedIndexChanged += new System.EventHandler(this.cmbBoxType_SelectedIndexChanged);
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(421, 311);
+            this.btnExport.Location = new System.Drawing.Point(297, 310);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(131, 21);
             this.btnExport.TabIndex = 7;
             this.btnExport.Text = "EXPORT";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -171,9 +171,9 @@
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(499, 311);
+            this.btnImport.Location = new System.Drawing.Point(442, 310);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.Size = new System.Drawing.Size(131, 21);
             this.btnImport.TabIndex = 8;
             this.btnImport.Text = "IMPORT";
             this.btnImport.UseVisualStyleBackColor = true;
@@ -204,7 +204,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(864, 436);
+            this.ClientSize = new System.Drawing.Size(797, 436);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.cmbBoxType);

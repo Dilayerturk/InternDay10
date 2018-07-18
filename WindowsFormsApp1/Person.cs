@@ -9,7 +9,6 @@ namespace WindowsFormsApp1
 {
     public class Person : INotifyPropertyChanged
     {
-
         String _TCNo;
         String _Name;
         String _Surname;
