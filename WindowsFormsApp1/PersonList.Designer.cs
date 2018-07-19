@@ -149,10 +149,6 @@
             // cmbBoxType
             // 
             this.cmbBoxType.FormattingEnabled = true;
-            this.cmbBoxType.Items.AddRange(new object[] {
-            ".csv",
-            ".xml",
-            ".json"});
             this.cmbBoxType.Location = new System.Drawing.Point(153, 310);
             this.cmbBoxType.Name = "cmbBoxType";
             this.cmbBoxType.Size = new System.Drawing.Size(116, 21);

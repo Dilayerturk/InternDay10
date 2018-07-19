@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace WindowsFormsApp1
 {
-    public class XmlImportExport : IXmlImportExport
+    public class XmlImportExport : IPersonExporter
     {
         public String FileExtension => ".xml";
 
@@ -32,6 +32,11 @@ namespace WindowsFormsApp1
             StreamWriter writer = new StreamWriter(filePath);
             serializer.Serialize(writer, personList);
             writer.Close();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

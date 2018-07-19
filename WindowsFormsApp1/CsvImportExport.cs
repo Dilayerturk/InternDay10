@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public class CsvImportExport : ICsvImportExport
+    public class CsvImportExport : IPersonExporter
     {
         public String FileExtension => ".csv";
-        public String Name => "csv";
+        public String Name => "CSV";
 
         public BindingList<Person> Open(String filePath)
         {

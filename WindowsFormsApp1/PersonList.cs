@@ -19,16 +19,23 @@ namespace WindowsFormsApp1
     public partial class PersonList : Form 
     {
         BindingList<Person> personList;
-        JsonImportExport jsonImporter = new JsonImportExport();
-        XmlImportExport xmlImporter = new XmlImportExport();
-        CsvImportExport csvImporter = new CsvImportExport();
 
+        PersonExporterFactory exporterFactory;
         public PersonList()
         {
             InitializeComponent();
             gridViewPerson.AutoGenerateColumns = false;
             personList = new BindingList<Person>();
             gridViewPerson.DataSource = personList;
+
+            exporterFactory = new PersonExporterFactory();
+
+            fillExporterList();
+        }
+
+        private void fillExporterList()
+        {
+            cmbBoxType.DataSource = exporterFactory.GetSupportedExporterNames();
         }
 
         private void btn_Add_Click(object sender, EventArgs e)
@@ -117,35 +124,15 @@ namespace WindowsFormsApp1
             }
             else
             {
-                if (cmbBoxType.Text == ".csv")
-                {
-                    string _filePath = SelectFileForSave(csvImporter.Name + "|*" + csvImporter.FileExtension);
+                string _selectedName = cmbBoxType.Text;
+                IPersonExporter _exporter = exporterFactory.CreateExporter(_selectedName);
+                string _filter = _exporter.Name + "|*" + _exporter.FileExtension;
+                string _filePath = selectFileForOpen(_filter);
 
-                    if (_filePath != null)
-                    {
-                        csvImporter.Save(_filePath, personList);
-                        MessageBox.Show("Data serialized successfully");
-                    }
-                }
-                else if (cmbBoxType.Text == ".xml")
+                if (_filePath != null)
                 {
-                    string _filePath = SelectFileForSave(xmlImporter.Name + "|*" + xmlImporter.FileExtension);
-
-                    if (_filePath != null)
-                    {
-                        xmlImporter.Save(_filePath, personList);
-                        MessageBox.Show("Data serialized successfully");
-                    }
-                }
-                else
-                {
-                    string _filePath = SelectFileForSave(jsonImporter.Name + "|*" + jsonImporter.FileExtension);
-
-                    if (_filePath != null)
-                    {
-                        jsonImporter.Save(_filePath, personList);
-                        MessageBox.Show("Data serialized successfully");
-                    }
+                    _exporter.Save(_filePath, personList);
+                    MessageBox.Show("Data serialized successfully");
                 }
             }
 
@@ -160,46 +147,22 @@ namespace WindowsFormsApp1
             }
             else
             {
-                if (cmbBoxType.Text == ".csv")
-                {
-                    string _filePath = selectFileForOpen(csvImporter.Name + "|*" + csvImporter.FileExtension);
+                string _selectedName = cmbBoxType.Text;
+                IPersonExporter _exporter = exporterFactory.CreateExporter(_selectedName);
 
-                    if (_filePath != null)
+                string _filter = _exporter.Name + "|*" + _exporter.FileExtension;
+
+                string _filePath = selectFileForOpen(_filter);
+
+                if (_filePath != null)
+                {
+                    BindingList<Person> _loadedList = _exporter.Open(_filePath);
+                    personList.Clear();
+                    for (int i = 0; i < _loadedList.Count; i++)
                     {
-                        BindingList<Person> _loadedList = csvImporter.Open(_filePath);
-                        personList.Clear();
-                        for (int i = 0; i < _loadedList.Count; i++)
-                        {
-                            personList.Add(_loadedList[i]);
-                        }
+                        personList.Add(_loadedList[i]);
                     }
-                }
-
-                else if (cmbBoxType.Text == ".xml")
-                {
-                    string _filePath = selectFileForOpen(xmlImporter.Name + "|*" + xmlImporter.FileExtension);
-
-                    if (_filePath != null)
-                    { 
-                        BindingList<Person> _loadedList = xmlImporter.Open(_filePath);
-                        personList.Clear();
-                        foreach (Person per in _loadedList)
-                        personList.Add(per);
-                    }
-                }
-
-                else
-                {
-                    string _filePath = selectFileForOpen(jsonImporter.Name + "|*" + jsonImporter.FileExtension);
-
-                    if (_filePath != null)
-                    {
-                        BindingList<Person> _loadedList = jsonImporter.Open(_filePath);
-                        personList.Clear();
-                        foreach (Person per in _loadedList)
-                        personList.Add(per);
-                    }
-                }
+                }                
             }
         }
 

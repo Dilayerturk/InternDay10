@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
 
-    public class JsonImportExport : IJsonImportExport
+    public class JsonImportExport : IPersonExporter
     {
         public String FileExtension => ".json";
 
