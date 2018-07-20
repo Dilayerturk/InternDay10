@@ -12,6 +12,7 @@ using CsvHelper;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Autofac;
 
 namespace WindowsFormsApp1
 {   
@@ -20,22 +21,21 @@ namespace WindowsFormsApp1
     {
         BindingList<Person> personList;
 
-        PersonExporterFactory exporterFactory;
-        public PersonList()
+        IPersonExporterFactory m_exporterFactory;
+
+        public PersonList(IPersonExporterFactory exporterFactory)
         {
             InitializeComponent();
             gridViewPerson.AutoGenerateColumns = false;
             personList = new BindingList<Person>();
             gridViewPerson.DataSource = personList;
-
-            exporterFactory = new PersonExporterFactory();
-
+            m_exporterFactory = exporterFactory;
             fillExporterList();
         }
 
         private void fillExporterList()
         {
-            cmbBoxType.DataSource = exporterFactory.GetSupportedExporterNames();
+            cmbBoxType.DataSource = m_exporterFactory.GetSupportedExporterNames();
         }
 
         private void btn_Add_Click(object sender, EventArgs e)
@@ -47,6 +47,7 @@ namespace WindowsFormsApp1
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     personList.Add(_person);
+
                 }
             }
         }
@@ -125,7 +126,7 @@ namespace WindowsFormsApp1
             else
             {
                 string _selectedName = cmbBoxType.Text;
-                IPersonExporter _exporter = exporterFactory.CreateExporter(_selectedName);
+                IPersonExporter _exporter = m_exporterFactory.CreateExporter(_selectedName);
                 string _filter = _exporter.Name + "|*" + _exporter.FileExtension;
                 string _filePath = selectFileForOpen(_filter);
 
@@ -135,12 +136,10 @@ namespace WindowsFormsApp1
                     MessageBox.Show("Data serialized successfully");
                 }
             }
-
         }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-
             if (cmbBoxType.SelectedItem == null)
             {
                 MessageBox.Show("Please select the type of file from combo box !");
@@ -148,10 +147,8 @@ namespace WindowsFormsApp1
             else
             {
                 string _selectedName = cmbBoxType.Text;
-                IPersonExporter _exporter = exporterFactory.CreateExporter(_selectedName);
-
+                IPersonExporter _exporter = m_exporterFactory.CreateExporter(_selectedName);
                 string _filter = _exporter.Name + "|*" + _exporter.FileExtension;
-
                 string _filePath = selectFileForOpen(_filter);
 
                 if (_filePath != null)

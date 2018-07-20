@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Autofac;
+using Autofac.Features.ResolveAnything;
 
 namespace WindowsFormsApp1
 {
@@ -14,9 +17,22 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
+           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PersonList());
+
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
+
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).As<IPersonExporter>();
+
+            builder.RegisterType<PersonExporterFactory>().As<IPersonExporterFactory>();
+
+            IContainer container = builder.Build();
+
+            PersonList _frm = container.Resolve<PersonList>();
+
+            Application.Run(_frm);
         }
     }
 }
